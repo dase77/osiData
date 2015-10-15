@@ -1,0 +1,45 @@
+library(shiny)
+
+# Define UI
+shinyUI(fluidPage(
+  
+  # Application title
+  titlePanel("Analiza Udžbenika"),
+  
+  # Sidebar
+  sidebarLayout(
+    sidebarPanel(
+      checkboxGroupInput("checkGroup", 
+                         label = h3("Razredi"), 
+                         choices = list("Šesti" = "šesti", "Sedmi" = "sedmi", "Osmi"="osmi","Deveti"="deveti"),
+                         selected = "šesti"),
+      selectInput("var", 
+                  label = "Odaberi",
+                  choices = list("Negativni oblici ponašanja"=8, 
+                                 "Univerzalne vrijednosti"=10,
+                                 "Partikularizacija"=12),
+                  selected =8),
+      
+      selectInput("var1", 
+                  label = "Odaberi NPP",
+                  choices = list("Svi"="svi", 
+                                 "Bosanski"="B",
+                                 "Srpski"="S",
+                                 "Hrvatski"="H"),
+                  selected ="svi")
+    ),
+    
+    # Show a plot of the generated distribution
+    mainPanel(
+      tabsetPanel(
+        tabPanel('grafikoni',plotOutput("plotosi"),plotOutput("plot1osi")),
+        tabPanel('tabele',tableOutput("tableosi"),tableOutput("table1osi")),
+        tabPanel('primjeri',tableOutput("table2osi")),
+        tabPanel('Nazivi lekcija',plotOutput("plot3osi"),tableOutput("table3osi"))
+        
+        
+      )
+        
+      )
+  )
+))
