@@ -26,14 +26,15 @@ shinyUI(fluidPage(
                                  "Bosanski"="B",
                                  "Srpski"="S",
                                  "Hrvatski"="H"),
-                  selected ="svi")
+                  selected ="svi"),
+      checkboxInput("checkbox", label = "Predmeti", value = FALSE)
     ),
     
     # Show a plot of the generated distribution
     mainPanel(
       tabsetPanel(
         tabPanel('grafikoni',plotOutput("plotosi"),plotOutput("plot1osi")),
-        tabPanel('tabele',tableOutput("tableosi"),tableOutput("table1osi")),
+        tabPanel('tabele',verbatimTextOutput("tableosi"),verbatimTextOutput("table1osi")),
         tabPanel('primjeri',tableOutput("table2osi")),
         tabPanel('Nazivi lekcija',plotOutput("plot3osi"),tableOutput("table3osi"))
         

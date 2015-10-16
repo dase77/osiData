@@ -15,7 +15,7 @@ levels(data$Predmet)[2]="Vjeronauka"
 data[,5]=factor(data[,5],labels=c("šesti","sedmi","osmi","deveti"))
 data[,4]=as.character(data[,4])
 data[,7]=as.character(data[,7])
-
+  
 shinyServer(
   function(input, output) {
     
@@ -31,13 +31,22 @@ shinyServer(
         data=data[data[,4]==input$var1,]
       
       data1=data[data[,5] %in% c(unlist(input$checkGroup)),]
+      
+      ### in predmet is selected
+      if(input$checkbox == TRUE)
+      {
+        qplot(Razred,fill=data1[,as.numeric(input$var)],data=data1,facets = .~Predmet)+scale_x_discrete("razred")+
+          scale_y_continuous("broj lekcija")+ theme(legend.title=element_blank())
+      
+      }
+      else
       qplot(data1[,5],fill=data1[,as.numeric(input$var)])+scale_x_discrete("razred")+scale_y_continuous("broj lekcija")+
         theme(legend.title=element_blank())
-    },height = 300, width = 400)
+    },height = 400, width = 600)
     
     
 ######################################### table with values
-    output$tableosi <- renderTable({ 
+    output$tableosi <- renderPrint({ 
      
        #### changing NPP
       if(input$var1 == "svi")
@@ -48,7 +57,14 @@ shinyServer(
         data=data[data[,4]==input$var1,]
       
       data1=data[data[,5] %in% c(unlist(input$checkGroup)),]
-      addmargins(table(data1[,as.numeric(input$var)],droplevels(data1[,5])))
+      
+      ### in predmet is selected
+      if(input$checkbox == TRUE)
+      {
+        addmargins(table(data1[,as.numeric(input$var)],droplevels(data1[,5]),data1[,3]))
+      }
+      else
+        addmargins(table(data1[,as.numeric(input$var)],droplevels(data1[,5])))
     })
     
     
@@ -64,13 +80,22 @@ shinyServer(
         data=data[data[,4]==input$var1,]
       
       data1=data[data[,5] %in% c(unlist(input$checkGroup)),]
+      
+      ### in predmet is selected
+      if(input$checkbox == TRUE)
+      {
+        qplot(Razred,fill=data1[,as.numeric(input$var)],position="fill",data=data1,facets = .~Predmet)+scale_x_discrete("razred")+
+          scale_y_continuous("procenat lekcija",labels=percent)+ theme(legend.title=element_blank())
+        
+      }
+      else
       qplot(data1[,5],fill=data1[,as.numeric(input$var)],position="fill")+scale_x_discrete("razred")+
         scale_y_continuous("procenat lekcija",labels=percent)+ theme(legend.title=element_blank())
-    },height = 300, width = 400)
+    },height = 400, width = 600)
     
     
     ######################################### tables with percentages
-    output$table1osi <- renderTable({ 
+    output$table1osi <- renderPrint({ 
       
       #### changing NPP
       if(input$var1 == "svi")
@@ -80,6 +105,14 @@ shinyServer(
       else
         data=data[data[,4]==input$var1,]
       data1=data[data[,5] %in% c(unlist(input$checkGroup)),]
+      ### in predmet is selected
+      if(input$checkbox == TRUE)
+      {
+        prop.table(ftable(table(data1[,3],droplevels(data1[,5]),data1[,as.numeric(input$var)])),margin = 1)*100
+      }
+      else
+      
+      
       prop.table(table(data1[,as.numeric(input$var)],droplevels(data1[,5])),margin = 2)*100
     })
     
