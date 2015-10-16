@@ -16,7 +16,6 @@ data[,5]=factor(data[,5],labels=c("šesti","sedmi","osmi","deveti"))
 data[,4]=as.character(data[,4])
 data[,7]=as.character(data[,7])
 
-
 shinyServer(
   function(input, output) {
     
