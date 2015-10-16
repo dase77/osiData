@@ -3,13 +3,24 @@ library(ggplot2)
 library(stringr)
 
 data=read.csv("historija (copy).csv",sep=";",na.strings=c(" ","","\"\"","NA","N/A")) # load tha data
+vjeronauk=read.csv("vjeronauk.csv",sep=";",na.strings=c(" ","","\"\"","NA","N/A")) # load tha data
+names(vjeronauk)=names(data) # same names in order to merge data
+data=rbind(data,vjeronauk)
+
+levels(data$Negativni.oblici.ponašanja)[c(3,4)]=c("Da","Ne")
+levels(data$Univerzalne.vrijednosti)[3]="Da"
+levels(data$Predmet)[2]="Vjeronauka"
+
+
 data[,5]=factor(data[,5],labels=c("šesti","sedmi","osmi","deveti"))
 data[,4]=as.character(data[,4])
 data[,7]=as.character(data[,7])
 
+
 shinyServer(
   function(input, output) {
     
+######################################### plots with values
     output$plotosi <- renderPlot({
       
       #### changing NPP
@@ -26,7 +37,7 @@ shinyServer(
     },height = 300, width = 400)
     
     
-    
+######################################### table with values
     output$tableosi <- renderTable({ 
      
        #### changing NPP
@@ -41,6 +52,8 @@ shinyServer(
       addmargins(table(data1[,as.numeric(input$var)],droplevels(data1[,5])))
     })
     
+    
+    ######################################### plots with percentages
     output$plot1osi <- renderPlot({ 
       
       #### changing NPP
@@ -57,6 +70,7 @@ shinyServer(
     },height = 300, width = 400)
     
     
+    ######################################### tables with percentages
     output$table1osi <- renderTable({ 
       
       #### changing NPP
@@ -70,6 +84,8 @@ shinyServer(
       prop.table(table(data1[,as.numeric(input$var)],droplevels(data1[,5])),margin = 2)*100
     })
     
+    
+    ######################################### table with examples
     output$table2osi <- renderTable({ 
       
       #### changing NPP
@@ -96,6 +112,8 @@ shinyServer(
       c
       },include.rownames=FALSE)
     
+    ######################################### tables with naziv lekcija
+    
     output$table3osi <- renderTable({ 
       
       #### changing NPP
@@ -108,7 +126,7 @@ shinyServer(
       data1=data[data[,5] %in% c(unlist(input$checkGroup)),]
       data.frame(data1[,c(5,7)])
       
-      
+      ######################################### plots with worcloud
       output$plot3osi <- renderPlot({ 
         
         #### changing NPP
