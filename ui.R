@@ -27,7 +27,7 @@ shinyUI(fluidPage(
                                  "Srpski"="S",
                                  "Hrvatski"="H"),
                   selected ="svi"),
-      checkboxInput("checkbox", label = "Predmeti", value = FALSE)
+      checkboxInput("checkbox", label = "Pregled po predmetima", value = FALSE)
     ),
     
     # Show a plot of the generated distribution
