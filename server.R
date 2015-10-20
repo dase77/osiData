@@ -14,7 +14,7 @@ names(geografija)=names(data) # same names in order to merge data
 data=rbind(data,vjeronauk,geografija)
 
 levels(data$Negativni.oblici.ponašanja)[c(3,4)]=c("Da","Ne")
-levels(data$Univerzalne.vrijednosti)[3]="Da"
+levels(data$Univerzalne.vrijednosti)[c(3,4)]=c("Da","Ne")
 levels(data$Predmet)[2]="Vjeronauka"
 
 
