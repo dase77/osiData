@@ -1,11 +1,17 @@
 library(shiny)
 library(ggplot2)
 library(stringr)
+library(scales)
+library(wordcloud)
 
 data=read.csv("historija (copy).csv",sep=";",na.strings=c(" ","","\"\"","NA","N/A")) # load tha data
+geografija=read.csv("geografija.csv",sep=";",na.strings=c(" ","","\"\"","NA","N/A")) # load tha data
 vjeronauk=read.csv("vjeronauk.csv",sep=";",na.strings=c(" ","","\"\"","NA","N/A")) # load tha data
+
 names(vjeronauk)=names(data) # same names in order to merge data
-data=rbind(data,vjeronauk)
+names(geografija)=names(data) # same names in order to merge data
+
+data=rbind(data,vjeronauk,geografija)
 
 levels(data$Negativni.oblici.ponašanja)[c(3,4)]=c("Da","Ne")
 levels(data$Univerzalne.vrijednosti)[3]="Da"
