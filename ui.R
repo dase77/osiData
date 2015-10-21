@@ -36,7 +36,10 @@ shinyUI(fluidPage(
         tabPanel('grafikoni',plotOutput("plotosi"),plotOutput("plot1osi")),
         tabPanel('tabele',verbatimTextOutput("tableosi"),verbatimTextOutput("table1osi")),
         tabPanel('primjeri',tableOutput("table2osi")),
-        tabPanel('Nazivi lekcija',plotOutput("plot3osi"),tableOutput("table3osi"))
+        tabPanel('primjeri prema predmetima',tableOutput("table4osi")),
+        tabPanel('Nazivi lekcija',plotOutput("plot3osi")),
+        tabPanel('Načini partikularizacije',verbatimTextOutput("table5osi"))
+        
         
         
       )
